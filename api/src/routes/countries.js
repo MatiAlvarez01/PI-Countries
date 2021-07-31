@@ -37,11 +37,13 @@ router.get("/", fillDatabase, async(req, res) => {
     const { name } = req.query;
     if(name) { //Si me pasan un nombre por Query
         const countries = await Country.findAll({
+            attributes: ["name", "imgFlag", "region", "population"],
             where: {
                 name: {
                     [Op.iLike]: `%${name}%` //iLike hace que no sea case sensitive
                 }
-            }
+            },
+            include: Activity
         }) //Si este pais existe
         if(countries.length) {
             return res.json(countries)
@@ -49,7 +51,10 @@ router.get("/", fillDatabase, async(req, res) => {
             return res.send(`${name} not Found`)
         }
     } else { //Si no me pasan nombre por Query
-        const allCountries = await Country.findAll();
+        const allCountries = await Country.findAll({
+            attributes: ["name", "imgFlag", "region", "population"],
+            include: Activity
+        });
         return res.send(allCountries)
     }
 })
@@ -58,7 +63,10 @@ router.get("/:idCountry", fillDatabase, async(req, res) => {
     let { idCountry } = req.params;
     idCountry = idCountry.toUpperCase() //Ya que los ID son case sensitive
     try {
-        const country = await Country.findByPk(idCountry)
+        const country = await Country.findByPk(idCountry, {
+            attributes: ["name", "imgFlag", "region", "id", "capital", "subRegion", "area", "population"],
+            include: Activity
+        })
         if(country) {
             return res.send(country)
         } else {
