@@ -30,8 +30,8 @@ server.use('/activity', activity);
 
 // Error catching endware.
 server.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
-  const status = err.status || 500;
-  const message = err.message || err;
+  const status = err.status || 500; //Status = 500 es un error de servidor.
+  const message  = err.message || err; //Si es un objeto, guardo el mensaje de ese obj. Y si es un string, lo guardo directamente
   console.error(err);
   res.status(status).send(message);
 });

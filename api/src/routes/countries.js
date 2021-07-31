@@ -33,16 +33,16 @@ async function fillDatabase(req, res, next) {
             return next()
         }
     } catch (err) {
-        console.log(err)
+        next(err)
     }
 }
 
-router.get("/", fillDatabase, async(req, res) => {
+router.get("/", fillDatabase, async(req, res, next) => {
     const { name } = req.query;
     try {
         if(name) { //Si me pasan un nombre por Query
             const countries = await Country.findAll({
-                attributes: ["name", "imgFlag", "region", "population"],
+                attributes: ["id", "name", "imgFlag", "region", "population"],
                 where: {
                     name: {
                         [Op.iLike]: `%${name}%` //iLike hace que no sea case sensitive
@@ -57,17 +57,17 @@ router.get("/", fillDatabase, async(req, res) => {
             }
         } else { //Si no me pasan nombre por Query
             const allCountries = await Country.findAll({
-                attributes: ["name", "imgFlag", "region", "population"],
+                attributes: ["id", "name", "imgFlag", "region", "population"],
                 include: Activity
             });
             return res.send(allCountries)
         }
     } catch (err) {
-        console.log(err)
+        return next(err)
     }
 })
 
-router.get("/:idCountry", fillDatabase, async(req, res) => {
+router.get("/:idCountry", fillDatabase, async(req, res, next) => {
     let { idCountry } = req.params;
     idCountry = idCountry.toUpperCase() //Ya que los ID son case sensitive
     try {
@@ -81,7 +81,7 @@ router.get("/:idCountry", fillDatabase, async(req, res) => {
             return res.send(`Country with id=${idCountry} not found.`)
         }
     } catch (err) {
-        return res.send(err)
+        return next(err)
     }
 })
 
