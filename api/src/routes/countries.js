@@ -11,51 +11,59 @@ const router = Router();
 // Ejemplo: router.use('/auth', authRouter);
 
 async function fillDatabase(req, res, next) {
-    const allCountries = await Country.findAll();
-    if(!allCountries.length) { //Si la database esta vacia, la completa, luego continua
-        let countriesToDatabase = await axios.get("https://restcountries.eu/rest/v2/all");
-        countriesToDatabase = countriesToDatabase.data.map(country => {
-            return Country.create({
-                id: country.alpha3Code,
-                name: country.name,
-                imgFlag: country.flag,
-                region: country.region,
-                capital: country.capital,
-                subRegion: country.subregion,
-                area: country.area,
-                population: country.population
+    try {
+        const allCountries = await Country.findAll();
+        if(!allCountries.length) { //Si la database esta vacia, la completa, luego continua
+            let countriesToDatabase = await axios.get("https://restcountries.eu/rest/v2/all");
+            countriesToDatabase = countriesToDatabase.data.map(country => {
+                return Country.create({
+                    id: country.alpha3Code,
+                    name: country.name,
+                    imgFlag: country.flag,
+                    region: country.region,
+                    capital: country.capital,
+                    subRegion: country.subregion,
+                    area: country.area,
+                    population: country.population
+                })
             })
-        })
-        Promise.all(countriesToDatabase)
-        .then(respuesta => next())
-    } else { //Si la database esta completa, continua
-        return next()
+            Promise.all(countriesToDatabase)
+            .then(respuesta => next())
+        } else { //Si la database esta completa, continua
+            return next()
+        }
+    } catch (err) {
+        console.log(err)
     }
 }
 
 router.get("/", fillDatabase, async(req, res) => {
     const { name } = req.query;
-    if(name) { //Si me pasan un nombre por Query
-        const countries = await Country.findAll({
-            attributes: ["name", "imgFlag", "region", "population"],
-            where: {
-                name: {
-                    [Op.iLike]: `%${name}%` //iLike hace que no sea case sensitive
-                }
-            },
-            include: Activity
-        }) //Si este pais existe
-        if(countries.length) {
-            return res.json(countries)
-        } else {
-            return res.send(`${name} not Found`)
+    try {
+        if(name) { //Si me pasan un nombre por Query
+            const countries = await Country.findAll({
+                attributes: ["name", "imgFlag", "region", "population"],
+                where: {
+                    name: {
+                        [Op.iLike]: `%${name}%` //iLike hace que no sea case sensitive
+                    }
+                },
+                include: Activity
+            }) //Si este pais existe
+            if(countries.length) {
+                return res.json(countries)
+            } else {
+                return res.send(`${name} not Found`)
+            }
+        } else { //Si no me pasan nombre por Query
+            const allCountries = await Country.findAll({
+                attributes: ["name", "imgFlag", "region", "population"],
+                include: Activity
+            });
+            return res.send(allCountries)
         }
-    } else { //Si no me pasan nombre por Query
-        const allCountries = await Country.findAll({
-            attributes: ["name", "imgFlag", "region", "population"],
-            include: Activity
-        });
-        return res.send(allCountries)
+    } catch (err) {
+        console.log(err)
     }
 })
 
