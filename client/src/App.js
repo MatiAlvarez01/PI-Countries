@@ -1,11 +1,21 @@
 import './App.css';
 import "./Fonts.css";
+import { useEffect } from "react";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { getCountries } from "../src/actions/index";
 import Landing from './components/Landing/Landing';
-import Country from './components/Country/Country';
+import CountryDetails from './components/CountryDetails/CountryDetails';
 import Countries from './components/Countries/Countries';
+import CreateActivity from './components/CreateActivity/CreateActivity';
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+      dispatch(getCountries())
+  }, [])
+
   return (
     <Router>
       <Switch>
@@ -16,7 +26,10 @@ function App() {
           <Countries />
         </Route>
         <Route exact path="/country/:id">
-          <Country />
+          <CountryDetails />
+        </Route>
+        <Route exact path="/newActivity">
+          <CreateActivity />
         </Route>
       </Switch>
     </Router>
