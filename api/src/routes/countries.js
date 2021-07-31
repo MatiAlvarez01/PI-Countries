@@ -5,7 +5,6 @@ const axios = require("axios");
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
-
 const router = Router();
 
 // Configurar los routers
@@ -55,9 +54,19 @@ router.get("/", fillDatabase, async(req, res) => {
     }
 })
 
-router.get("/:idCountry", (req, res) => {
-    //Tengo que hacer un nuevo llamado a la API o uso la database?
-    res.send("ENTRE A COUNTRIES/:ID")
+router.get("/:idCountry", fillDatabase, async(req, res) => {
+    let { idCountry } = req.params;
+    idCountry = idCountry.toUpperCase() //Ya que los ID son case sensitive
+    try {
+        const country = await Country.findByPk(idCountry)
+        if(country) {
+            return res.send(country)
+        } else {
+            return res.send(`Country with id=${idCountry} not found.`)
+        }
+    } catch (err) {
+        return res.send(err)
+    }
 })
 
 module.exports = router;
