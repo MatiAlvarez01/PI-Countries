@@ -9,7 +9,11 @@ const router = Router();
 // Ejemplo: router.use('/auth', authRouter);
 
 router.get("/", (req, res) => {
-    res.send("ENTRE A INDEX /")
+    res.send("ENTRE A COUNTRIES /")
+})
+
+router.get("/:idCountry", (req, res) => {
+    res.send("ENTRE A COUNTRIES/:ID")
 })
 
 module.exports = router;
