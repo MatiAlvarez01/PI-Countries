@@ -1,10 +1,25 @@
 import './App.css';
+import "./Fonts.css";
+import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
+import Landing from './components/Landing/Landing';
+import Country from './components/Country/Country';
+import Countries from './components/Countries/Countries';
 
 function App() {
   return (
-    <div className="App">
-      <h1>Henry Countries</h1>
-    </div>
+    <Router>
+      <Switch>
+        <Route exact path="/">
+          <Landing />
+        </Route>
+        <Route exact path="/countries">
+          <Countries />
+        </Route>
+        <Route exact path="/country/:id">
+          <Country />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
