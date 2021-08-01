@@ -85,8 +85,9 @@ function Countries() {
     const [sortByName, setSortByName] = useState("ASC");
     const [sortByPopulation, setSortByPopulation] = useState("ASC")
     const [region, setRegion] = useState("all");
+    const [indexStart, setIndexStart] = useState(0)
+    const [indexEnd, setIndexEnd] = useState(9)
     const dispatch = useDispatch();
-
 
     function handleInputChange(event) {
         setSearch(event.target.value);
@@ -123,6 +124,20 @@ function Countries() {
     function handleSubmitRegion(event){
         event.preventDefault();
         dispatch(filterByRegion(region));
+    }
+
+    function handlePrevPage() {
+        if (indexStart <= 9 && indexEnd <= 18){
+            setIndexStart(0)
+            return setIndexEnd(9)
+        }
+        setIndexStart(prevState => prevState - 9)
+        setIndexEnd(prevState => prevState - 9)
+    }
+
+    function handleNextPage() {
+        setIndexStart(prevState => prevState + 9)
+        setIndexEnd(prevState => prevState + 9)
     }
 
     return (
@@ -166,8 +181,12 @@ function Countries() {
                     </form>
                 </FiltersSection>
                 <CountriesSection>
+                <div>
+                    <button onClick={handlePrevPage}>Prev Page</button>
+                    <button onClick={handleNextPage}>Next Page</button>
+                </div>
                     {Array.isArray(countries) ? 
-                    countries?.map(country => <Country key={country.id} country={country}/>) : 
+                    countries?.slice(indexStart,indexEnd).map(country => <Country key={country.id} country={country}/>) : 
                     <p>{countries}</p>}
                 </CountriesSection>
             </ResultSection>
