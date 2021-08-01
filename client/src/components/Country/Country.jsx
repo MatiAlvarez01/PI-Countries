@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState }from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const CountryCard = styled.div`
-    background-color: grey;
+    background-color: whitesmoke;
     height: 400px;
     width: 300px;
     display: flex;
@@ -35,7 +35,6 @@ const StyledLink = styled(Link)`
 `;
 
 function Country({country}) {
-    console.log(country)
     return (
         <StyledLink to={`/country/${country.id}`}>
             <CountryCard>
