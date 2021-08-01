@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components"
 import Country from "../Country/Country";
-import { searchCountriesByName, orderByName, orderByPopulation } from "../../actions";
+import { searchCountriesByName, orderByName, orderByPopulation, filterByRegion } from "../../actions";
 
 const StyledLink = styled(Link)`
     color: black;
@@ -84,7 +84,9 @@ function Countries() {
     const [search, setSearch] = useState();
     const [sortByName, setSortByName] = useState("ASC");
     const [sortByPopulation, setSortByPopulation] = useState("ASC")
+    const [region, setRegion] = useState("all");
     const dispatch = useDispatch();
+
 
     function handleInputChange(event) {
         setSearch(event.target.value);
@@ -115,6 +117,14 @@ function Countries() {
         }
     }
 
+    function handleChangeSelectRegion(event) {
+        setRegion(event.target.value);
+    }
+    function handleSubmitRegion(event){
+        event.preventDefault();
+        dispatch(filterByRegion(region));
+    }
+
     return (
         <PageSection>
             <TopSection>
@@ -140,7 +150,20 @@ function Countries() {
                     <button onClick={buttonOrderByName}>Order by name</button>
                     <button onClick={buttonOrderByPopulation}>Order by population</button>
                     <p>POR CONTINENTE Y ACTIVIDAD TURISTICA</p>
-                    
+                    <form onSubmit={handleSubmitRegion}>
+                        <label>Filter by Region: 
+                            <select value={region} onChange={handleChangeSelectRegion}>
+                                <option value="all">None</option>
+                                <option value="Africa">Africa</option>
+                                <option value="Americas">Americas</option>
+                                <option value="Asia">Asia</option>
+                                <option value="Europe">Europe</option>
+                                <option value="Oceania">Oceania</option>
+                                <option value="Polar">Polar</option>
+                            </select>
+                        </label>
+                        <button type="submit" value="Submit">Filter</button>
+                    </form>
                 </FiltersSection>
                 <CountriesSection>
                     {Array.isArray(countries) ? 

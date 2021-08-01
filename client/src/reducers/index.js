@@ -78,9 +78,15 @@ function reducer(state = initialState, action) {
                 countries: countriesByPopulation
             }
         case FILTER_REGION:
-            
-            const countriesByRegion = state.countries;
+            const countries = state.countriesBackup;
+            let countriesByRegion = []
+            if (action.payload === "all") {
+                countriesByRegion = countries;
+            } else {
+                countriesByRegion = countries.filter(country => country.region === action.payload);
+            }
             return {
+                ...state,
                 countries: countriesByRegion
             }
         //case ORDER --> generar un nuevo array ordenado y devolverlo.
