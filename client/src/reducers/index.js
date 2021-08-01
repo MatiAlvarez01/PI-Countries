@@ -1,8 +1,18 @@
-import { GET_COUNTRIES, SEARCH_COUNTRIES, ORDER_NAMES, ORDER_POPULATION, FILTER_REGION } from "../actions/constants";
+import { 
+    GET_COUNTRIES, 
+    SEARCH_COUNTRIES,
+    GET_COUNTRY_DETAILS, 
+    ORDER_NAMES, 
+    ORDER_POPULATION, 
+    FILTER_REGION,
+    CREATE_ACTIVITY } from "../actions/constants";
 
 var initialState = {
     countries: [],
-    countriesBackup: []
+    countriesBackup: [],
+    countriesNames: [],
+    countryDetails: {},
+    newActivity: {}
 }
 
 function reducer(state = initialState, action) {
@@ -16,6 +26,11 @@ function reducer(state = initialState, action) {
             return {
                 ...state,
                 countries: action.payload
+            }
+        case GET_COUNTRY_DETAILS:
+            return {
+                ...state,
+                countryDetails: action.payload
             }
         case ORDER_NAMES:
             var compareNames = function() {}
@@ -89,7 +104,11 @@ function reducer(state = initialState, action) {
                 ...state,
                 countries: countriesByRegion
             }
-        //case ORDER --> generar un nuevo array ordenado y devolverlo.
+        case CREATE_ACTIVITY:
+            return {
+                ...state,
+                newActivity: action.payload
+            }
         default: return {
             ...state
         }

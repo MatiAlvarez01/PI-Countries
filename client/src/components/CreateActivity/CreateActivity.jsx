@@ -1,8 +1,75 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { createNewActivity } from "../../actions";
+import { countriesNames } from "../../actions";
+import styled from "styled-components";
+
+const PageSection = styled.section`
+    background-color: grey;
+    display: flex;
+    flex-direction: column;
+`
+const TopSection = styled.section`
+    background-color: blue;
+    height: 10vh;
+`
+const MiddleSection = styled.section`
+    background-color: coral;
+    height: 90vh;
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+`
+const MiddleSectionLeft = styled.div`
+    background-color: white;
+    width: 90vh;
+`
+const MiddleSectionRight = styled.div`
+    background-color: green;
+    width: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+`
+const CreateActivityDiv = styled.div`
+    background-color: grey;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+`
+const CountriesDiv = styled.div`
+
+`
+const FiltersDiv = styled.div`
+
+`
+const StyledButton = styled.button`
+`
+const StyledUList = styled.ul`
+    height: 50vh;
+    overflow: hidden;
+    overflow-y: scroll;
+    list-style: none
+`
+const StyledLItem = styled.li`
+    margin: 5px;
+`
+const ButtonChoose = styled.button`
+    margin-left: 5px;
+`
+
 
 function CreateActivity() {
-    const [newActivity, setNewActivity] = useState({})
+    const countries = useSelector(state => state.countriesBackup);
+    const dispatch = useDispatch();
+    const [newActivity, setNewActivity] = useState({
+        name: "",
+        difficulty: "",
+        duration: "",
+        season: "",
+        countries: [],
+    });
 
     function onInputChange(event) {
         setNewActivity(prevState => {
@@ -13,37 +80,71 @@ function CreateActivity() {
         })
     }
 
-    useEffect(() => {
+    function submitNewActivity(event) {
+        event.preventDefault();
+        dispatch(createNewActivity(newActivity))
+    }
 
-    }, [])
+    function handleChooseButton(id) {
+        setNewActivity({
+            ...newActivity,
+            countries: [...newActivity.countries, id]
+        })
+    }
+
+    console.log(newActivity)
     
     return (
-        <form>
-            <label>Name:</label>
-            <input 
-                type="text" 
-                name="name" 
-                value={newActivity.name} 
-                onChange={onInputChange}/>
-            <label>Difficulty:</label>
-            <input 
-                type="text" 
-                name="difficulty" 
-                value={newActivity.difficulty} 
-                onChange={onInputChange}/>
-            <label>Duration:</label>
-            <input 
-                type="text" 
-                name="duration" 
-                value={newActivity.duration} 
-                onChange={onInputChange}/>
-            <label>Season:</label>
-            <input 
-                type="text" 
-                name="season" 
-                value={newActivity.season} 
-                onChange={onInputChange}/>
-        </form>
+    <PageSection>
+        <TopSection>
+            <StyledButton>Home</StyledButton>
+        </TopSection>
+        <MiddleSection>
+            <MiddleSectionLeft>
+                <CreateActivityDiv>
+                    <form onSubmit={submitNewActivity}>
+                        <label>Name:</label>
+                            <input 
+                                type="text" 
+                                name="name" 
+                                value={newActivity.name} 
+                                onChange={onInputChange}/>
+                        <label>Difficulty:</label>
+                        <input 
+                            type="text" 
+                            name="difficulty" 
+                            value={newActivity.difficulty} 
+                            onChange={onInputChange}/>
+                        <label>Duration:</label>
+                        <input 
+                            type="text" 
+                            name="duration" 
+                            value={newActivity.duration} 
+                            onChange={onInputChange}/>
+                        <label>Season:</label>
+                        <input 
+                            type="text" 
+                            name="season" 
+                            value={newActivity.season} 
+                            onChange={onInputChange}/>
+                        <button type="submit">Create</button>
+                    </form>
+                </CreateActivityDiv>
+            </MiddleSectionLeft>
+            <MiddleSectionRight>
+                <FiltersDiv>
+                    FILTERS
+                </FiltersDiv>
+                <CountriesDiv>
+                    <StyledUList>
+                        {countries?.length ? 
+                        countries?.map(country => <StyledLItem>{country.name} <ButtonChoose onClick={() => handleChooseButton(country.id)}>Choose</ButtonChoose></StyledLItem>) : 
+                        <li>Country not found</li>}
+                    </StyledUList>
+                </CountriesDiv>
+            </MiddleSectionRight>
+        </MiddleSection>
+    </PageSection>
     )
 }
 

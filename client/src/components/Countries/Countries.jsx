@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components"
@@ -13,7 +13,6 @@ const StyledLink = styled(Link)`
         text-decoration: none;
     };
 `;
-
 const PageSection = styled.section`
 `
 const TopSection = styled.section`
@@ -80,7 +79,7 @@ const SearchInput = styled.input`
 `
 
 function Countries() {
-    let countries = useSelector(state => state.countries);
+    const countries = useSelector(state => state.countries);
     const [search, setSearch] = useState();
     const [sortByName, setSortByName] = useState("ASC");
     const [sortByPopulation, setSortByPopulation] = useState("ASC")

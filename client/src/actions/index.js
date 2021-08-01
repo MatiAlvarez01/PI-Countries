@@ -1,6 +1,15 @@
 import axios from "axios"
-import { GET_COUNTRIES, SEARCH_COUNTRIES, ORDER_NAMES, ORDER_POPULATION, FILTER_REGION } from "./constants";
-import { COUNTRIES_URL } from "../constants";
+import { 
+    COUNTRIES_URL,
+    ACTIVITY_URL } from "../constants";
+import { 
+    GET_COUNTRIES, 
+    SEARCH_COUNTRIES,
+    GET_COUNTRY_DETAILS, 
+    ORDER_NAMES, 
+    ORDER_POPULATION, 
+    FILTER_REGION, 
+    CREATE_ACTIVITY } from "./constants";
 
 export function getCountries() {
     return function(dispatch) { //Este dispatch me lo da el Redux Thunk
@@ -21,6 +30,31 @@ export function searchCountriesByName(name) {
                 dispatch({
                     type: SEARCH_COUNTRIES,
                     payload: countries.data
+                })
+            })
+    }
+}
+
+export function getCountryDetails(id) {
+    return function(dispatch) {
+        return axios.get(`${COUNTRIES_URL}/${id}`)
+            .then(countryDetails => {
+                dispatch({
+                    type: GET_COUNTRY_DETAILS,
+                    payload: countryDetails.data
+                })
+            })
+        }
+    }
+    
+export function createNewActivity(activity) {
+    return function(dispatch) {
+        return axios.post(ACTIVITY_URL, activity)
+            .then(activiyPosted => {
+                alert("New activity created succefully")
+                return dispatch({
+                    type:CREATE_ACTIVITY,
+                    payload: activiyPosted.data
                 })
             })
     }

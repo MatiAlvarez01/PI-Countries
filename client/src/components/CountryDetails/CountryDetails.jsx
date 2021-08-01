@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { COUNTRIES_URL } from "../../constants";
-import { useParams } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getCountryDetails } from "../../actions";
 import styled from "styled-components"
-import axios from "axios";
 
 const CountryDetailsSection = styled.section`
     background-color: green;
@@ -66,43 +66,40 @@ const Dato = styled.span`
 `
 
 function CountryDetails() {
-    const [countryDetails, setCountryDetails] = useState({})
-    const { id } = useParams()
-
-    function getCountryDetails(id) {
-        axios.get(`${COUNTRIES_URL}/${id}`)
-        .then(countryDetails => setCountryDetails(countryDetails.data))
-    }
+    const { id } = useParams();
+    let countryDetails = useSelector(state => state.countryDetails);
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        getCountryDetails(id)
+        dispatch(getCountryDetails(id));
     }, [])
 
     return (
         <CountryDetailsSection>
             <NameSection>
-                <CountryName>{countryDetails.name}</CountryName>
+                <Link to="/countries"><button>Home</button></Link>
+                <CountryName>{countryDetails?.name}</CountryName>
             </NameSection>
             <MiddleSection>
                 <FlagDiv>
-                    <FlagImg src={countryDetails.imgFlag} alt="Country Flag"/>
+                    <FlagImg src={countryDetails?.imgFlag} alt="Country Flag"/>
                 </FlagDiv>
                 <InfoDiv>
                     <InfoDivLeft>
-                        <Property>ID: <Dato>{countryDetails.id}</Dato></Property>
-                        <Property>CAPITAL: <Dato>{countryDetails.capital}</Dato></Property>
-                        <Property>POPULATION: <Dato>{countryDetails.population}</Dato></Property>
+                        <Property>ID: <Dato>{countryDetails?.id}</Dato></Property>
+                        <Property>CAPITAL: <Dato>{countryDetails?.capital}</Dato></Property>
+                        <Property>POPULATION: <Dato>{countryDetails?.population}</Dato></Property>
                     </InfoDivLeft>
                     <InfoDivRight>
-                        <Property>REGION: <Dato>{countryDetails.region}</Dato></Property>
-                        <Property>SUB REGION: <Dato>{countryDetails.subRegion}</Dato></Property>
-                        <Property>AREA: <Dato>{countryDetails.area}</Dato></Property>
+                        <Property>REGION: <Dato>{countryDetails?.region}</Dato></Property>
+                        <Property>SUB REGION: <Dato>{countryDetails?.subRegion}</Dato></Property>
+                        <Property>AREA: <Dato>{countryDetails?.area}</Dato>km2</Property>
                     </InfoDivRight>
                 </InfoDiv>
             </MiddleSection>
             <ActivitiesSection>
-                {countryDetails.activities?.length ? 
-                countryDetails.activities.map(activity => <p>{activity}</p>) :
+                {countryDetails?.activities?.length ? 
+                countryDetails?.activities.map(activity => <p>{activity.name}</p>) :
                 <p>This Country dosn't have any activities</p>}
             </ActivitiesSection>
         </CountryDetailsSection>
