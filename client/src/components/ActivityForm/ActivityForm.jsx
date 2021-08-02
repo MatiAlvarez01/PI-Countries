@@ -9,16 +9,19 @@ const StyledForm = styled.form`
     align-items: center;
 `
 const Label = styled.label`
-    margin: 5%;
+    margin: 3%;
     font-size: 2.5rem;
 `
 const Input = styled.input`
-    margin: 2% ;
+    margin: 1% ;
     font-size: 2rem;
 `
 const Button = styled.button`
     margin: 3%;
     font-size: 1.5rem;
+`
+const OptionsSpan = styled.span`
+    font-size: 20px
 `
 
 function ActivityForm(props) {
@@ -46,7 +49,7 @@ function ActivityForm(props) {
                 name="name" 
                 value={props.state.name} 
                 onChange={onInputChange}/>
-        <Label>Difficulty:</Label>
+        <Label>Difficulty:<br/><OptionsSpan>(1, 2, 3, 4, 5)</OptionsSpan></Label>
         <Input 
             type="text" 
             name="difficulty" 
@@ -58,7 +61,7 @@ function ActivityForm(props) {
             name="duration" 
             value={props.state.duration} 
             onChange={onInputChange}/>
-        <Label>Season:</Label>
+        <Label>Season: <br/><OptionsSpan>(Summer, Autumn, Winter, Spring)</OptionsSpan></Label>
         <Input 
             type="text" 
             name="season" 

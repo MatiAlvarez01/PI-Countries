@@ -9,9 +9,17 @@ const router = Router();
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 
+router.get("/", async (req, res, next) => {
+    try {
+        const activities = await Activity.findAll();
+        return res.json(activities)
+    } catch (err) {
+        return next(err);
+    }
+})
+
 router.post("/", async (req, res, next) => {
     const { name, difficulty, duration, season, countries } = req.body;
-    console.log(countries)
     try {
         const newActivity = await Activity.create({
             id: uuidv4(),

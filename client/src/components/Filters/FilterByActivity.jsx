@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { filterByActivity } from "../../actions";
 
 const Form = styled.form`
-    width: 100%;
+    width: 80%;
     padding: 2%;
     text-align: center;
 `

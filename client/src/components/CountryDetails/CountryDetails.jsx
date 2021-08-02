@@ -5,17 +5,17 @@ import { getCountryDetails } from "../../actions";
 import styled from "styled-components"
 
 const CountryDetailsSection = styled.section`
-    background-color: green;
+    background-color: #E4DFDA;
+    height: 100vh;
 `
 const NameSection = styled.section`
     background-color: white;
     text-align: center;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
 `
 const MiddleSection = styled.section`
-    background-color: coral;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -23,8 +23,12 @@ const MiddleSection = styled.section`
     justify-content: space-around;
 `
 const ActivitiesSection = styled.section`
-    text-align: center;
-    padding: 1%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`
+const ActivitiesSectionTitle = styled.div`
+
 `
 const FlagDiv = styled.div`
     display: flex;
@@ -64,6 +68,23 @@ const Dato = styled.span`
     font-size: 2rem;
     font-style: normal;
 `
+const Button = styled.button`
+    font-size: 2rem;
+`
+const ActivitiesTitle = styled.p`
+    font-size: 1.5rem;
+`
+const ActivityCard = styled.div`
+    height: 160px;
+    width: 150px;
+    background-color: white;
+    margin: 2%;
+    padding: 1%;
+    text-align: center;
+`
+const Activities = styled.div`
+    display: flex;
+`
 
 function CountryDetails() {
     const { id } = useParams();
@@ -77,7 +98,7 @@ function CountryDetails() {
     return (
         <CountryDetailsSection>
             <NameSection>
-                <Link to="/countries"><button>Home</button></Link>
+                <Link to="/countries"><Button>Home</Button></Link>
                 <CountryName>{countryDetails?.name}</CountryName>
             </NameSection>
             <MiddleSection>
@@ -98,9 +119,19 @@ function CountryDetails() {
                 </InfoDiv>
             </MiddleSection>
             <ActivitiesSection>
-                {countryDetails?.activities?.length ? 
-                countryDetails?.activities.map(activity => <p>{activity.name}</p>) :
+                <ActivitiesSectionTitle>
+                    <ActivitiesTitle>ACTIVITIES:</ActivitiesTitle>
+                </ActivitiesSectionTitle>
+                <Activities>
+                    {countryDetails?.activities?.length ? 
+                    countryDetails?.activities.map(activity => <ActivityCard>
+                        <p>{activity.name}</p>
+                        <p>Difficulty: {activity.difficulty}</p>
+                        <p>Duration: {activity.duration}</p>
+                        <p>Season: {activity.season}</p>
+                    </ActivityCard>) :
                 <p>This Country dosn't have any activities</p>}
+                </Activities>
             </ActivitiesSection>
         </CountryDetailsSection>
     )
