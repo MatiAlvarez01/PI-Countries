@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { createNewActivity } from "../../actions";
-import { countriesNames } from "../../actions";
 import styled from "styled-components";
 
 const PageSection = styled.section`
@@ -23,6 +22,12 @@ const MiddleSection = styled.section`
 const MiddleSectionLeft = styled.div`
     background-color: white;
     width: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: nowrap;
+    align-items: center;
 `
 const MiddleSectionRight = styled.div`
     background-color: green;
@@ -42,7 +47,8 @@ const CountriesDiv = styled.div`
 
 `
 const FiltersDiv = styled.div`
-
+    background-color: white;
+    height: 40vh;
 `
 const StyledButton = styled.button`
 `
@@ -57,6 +63,11 @@ const StyledLItem = styled.li`
 `
 const ButtonChoose = styled.button`
     margin-left: 5px;
+`
+const StyledForm = styled.form`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `
 
 
@@ -92,8 +103,6 @@ function CreateActivity() {
         })
     }
 
-    console.log(newActivity)
-    
     return (
     <PageSection>
         <TopSection>
@@ -102,7 +111,7 @@ function CreateActivity() {
         <MiddleSection>
             <MiddleSectionLeft>
                 <CreateActivityDiv>
-                    <form onSubmit={submitNewActivity}>
+                    <StyledForm onSubmit={submitNewActivity}>
                         <label>Name:</label>
                             <input 
                                 type="text" 
@@ -128,7 +137,7 @@ function CreateActivity() {
                             value={newActivity.season} 
                             onChange={onInputChange}/>
                         <button type="submit">Create</button>
-                    </form>
+                    </StyledForm>
                 </CreateActivityDiv>
             </MiddleSectionLeft>
             <MiddleSectionRight>
