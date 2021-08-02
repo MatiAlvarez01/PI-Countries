@@ -1,6 +1,11 @@
 import React from "react";
+import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { orderByPopulation } from "../../actions";
+
+const Button = styled.button`
+    margin: 2%;
+`
 
 function OrderByPopulation(props) {
     const dispatch = useDispatch();
@@ -16,7 +21,7 @@ function OrderByPopulation(props) {
     }
 
     return (
-        <button onClick={handleButtonClick}>Order by population</button>
+        <Button onClick={handleButtonClick}>Order by population</Button>
     )
 }
 

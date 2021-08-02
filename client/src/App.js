@@ -3,7 +3,7 @@ import "./Fonts.css";
 import { useEffect } from "react";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import { useDispatch } from 'react-redux';
-import { getCountries, countriesNames } from "../src/actions/index";
+import { getActivities, getCountries } from "../src/actions/index";
 import Landing from './components/Landing/Landing';
 import CountryDetails from './components/CountryDetails/CountryDetails';
 import Countries from './components/Countries/Countries';
@@ -13,7 +13,8 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-      dispatch(getCountries())
+    dispatch(getCountries());
+    dispatch(getActivities());
   }, [])
 
   return (

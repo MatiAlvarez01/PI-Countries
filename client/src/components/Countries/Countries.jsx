@@ -39,12 +39,13 @@ const ResultSection = styled.section`
 const FiltersSection = styled.section`
     width: 50vh;
     background-color: #D2EFFA;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `
 const CountriesSection = styled.section`
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-direction: column;
     width: 150vh;
 `
 const NewActivityDiv = styled.div`
@@ -68,6 +69,16 @@ const ButtonNewActiviy = styled.button`
         border:1px solid #D6A886;
     }
 `
+const PaginationButtonsDiv = styled.div`
+    display: flex;
+    justify-content: center;
+`
+const CountriesDiv = styled.div`
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+`
 
 function Countries() {
     const countries = useSelector(state => state.countries);
@@ -75,6 +86,7 @@ function Countries() {
     const [sortByName, setSortByName] = useState("ASC");
     const [sortByPopulation, setSortByPopulation] = useState("ASC")
     const [region, setRegion] = useState("all");
+    const [activity, setActivity] = useState("all")
     const [indexStart, setIndexStart] = useState(0)
     const [indexEnd, setIndexEnd] = useState(9)
 
@@ -94,17 +106,19 @@ function Countries() {
                     <OrderByName state={sortByName} setStateName={setSortByName}/>
                     <OrderByPopulation state={sortByPopulation} setStatePopulation={setSortByPopulation}/>
                     <p>POR CONTINENTE Y ACTIVIDAD TURISTICA</p>
-                    <FilterByRegion state={region} setRegion={setRegion}/>
-                    <FilterByActivity />
+                    <FilterByRegion state={region} setState={setRegion}/>
+                    <FilterByActivity state={activity} setState={setActivity}/>
                 </FiltersSection>
                 <CountriesSection>
-                <div>
-                    <PrevPage stateStart={indexStart} stateEnd={indexEnd} setStateStart={setIndexStart} setStateEnd={setIndexEnd}/>
-                    <NextPage setStateStart={setIndexStart} setStateEnd={setIndexEnd}/>
-                </div>
-                    {Array.isArray(countries) ? 
-                    countries?.slice(indexStart,indexEnd).map(country => <Country key={country.id} country={country}/>) : 
-                    <p>{countries}</p>}
+                    <PaginationButtonsDiv>
+                        <PrevPage stateStart={indexStart} stateEnd={indexEnd} setStateStart={setIndexStart} setStateEnd={setIndexEnd}/>
+                        <NextPage setStateStart={setIndexStart} setStateEnd={setIndexEnd}/>
+                    </PaginationButtonsDiv>
+                        <CountriesDiv>
+                        {Array.isArray(countries) ? 
+                        countries?.slice(indexStart,indexEnd).map(country => <Country key={country.id} country={country}/>) : 
+                        <p>{countries}</p>}
+                    </CountriesDiv>
                 </CountriesSection>
             </ResultSection>
         </PageSection>

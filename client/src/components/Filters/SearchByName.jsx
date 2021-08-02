@@ -4,7 +4,7 @@ import styled from "styled-components"
 import { searchCountriesByName } from "../../actions";
 
 const SearchDiv = styled.div`
-    width: 140vh;
+    width: 70%;
     display: flex;
     justify-content: center;
     align-items: center;

@@ -8,8 +8,10 @@ import {
     GET_COUNTRY_DETAILS, 
     ORDER_NAMES, 
     ORDER_POPULATION, 
-    FILTER_REGION, 
-    CREATE_ACTIVITY } from "./constants";
+    FILTER_REGION,
+    FILTER_ACTIVITY,
+    CREATE_ACTIVITY,
+    GET_ACTIVITIES } from "./constants";
 
 export function getCountries() {
     return function(dispatch) { //Este dispatch me lo da el Redux Thunk
@@ -53,8 +55,20 @@ export function createNewActivity(activity) {
             .then(activiyPosted => {
                 alert("New activity created succefully")
                 return dispatch({
-                    type:CREATE_ACTIVITY,
+                    type: CREATE_ACTIVITY,
                     payload: activiyPosted.data
+                })
+            })
+    }
+}
+
+export function getActivities() {
+    return function(dispatch) {
+        return axios.get(ACTIVITY_URL)
+            .then(activitiesDATA => {
+                return dispatch({
+                    type: GET_ACTIVITIES,
+                    payload: activitiesDATA.data
                 })
             })
     }
@@ -83,6 +97,15 @@ export function filterByRegion(region) {
         return dispatch({
             type: FILTER_REGION,
             payload: region
+        })
+    }
+}
+
+export function filterByActivity(activity) {
+    return function(dispatch) {
+        return dispatch({
+            type: FILTER_ACTIVITY,
+            payload: activity
         })
     }
 }

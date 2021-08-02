@@ -1,6 +1,11 @@
 import React from "react";
+import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { orderByName } from "../../actions";
+
+const Button = styled.button`
+    margin: 2%;
+`
 
 function OrderByName(props) {
     const dispatch = useDispatch();
@@ -15,7 +20,7 @@ function OrderByName(props) {
         }
     }
     return (
-        <button onClick={handleButtonClick}>Order by name</button>
+        <Button onClick={handleButtonClick}>Order by name</Button>
     )
 }
 

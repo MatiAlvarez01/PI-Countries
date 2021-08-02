@@ -5,12 +5,14 @@ import {
     ORDER_NAMES, 
     ORDER_POPULATION, 
     FILTER_REGION,
-    CREATE_ACTIVITY } from "../actions/constants";
+    FILTER_ACTIVITY,
+    CREATE_ACTIVITY, 
+    GET_ACTIVITIES } from "../actions/constants";
 
 var initialState = {
     countries: [],
     countriesBackup: [],
-    countriesNames: [],
+    activitiesList: [],
     countryDetails: {},
     newActivity: {}
 }
@@ -108,6 +110,23 @@ function reducer(state = initialState, action) {
             return {
                 ...state,
                 newActivity: action.payload
+            }
+        case GET_ACTIVITIES:
+            return {
+                ...state,
+                activitiesList: action.payload
+            }
+        case FILTER_ACTIVITY:
+            const countries2 = state.countriesBackup
+            let countriesByActivity = [];
+            if (action.payload === "all") {
+                countriesByActivity = countries2;
+            } else {
+                countriesByActivity = countries2.filter(country => country.activities.filter(activity => activity.name === action.payload))
+            }
+            return {
+                ...state,
+                countries: countriesByActivity
             }
         default: return {
             ...state

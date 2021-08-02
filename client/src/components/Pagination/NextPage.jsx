@@ -1,4 +1,9 @@
 import React from "react";
+import styled from "styled-components";
+
+const Button = styled.button`
+    margin-left: 1%
+`
 
 function NextPage(props) {
     function handleButtonClick(){
@@ -6,7 +11,7 @@ function NextPage(props) {
         props.setStateEnd(prevState => prevState + 9)
     }
     return (
-        <button onClick={handleButtonClick}>Next Page</button>
+        <Button onClick={handleButtonClick}>Next Page</Button>
     )
 }
 

@@ -1,26 +1,49 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { createNewActivity } from "../../actions";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
+import SearchByName from "../Filters/SearchByName"
+import OrderByName from "../Filters/OrderByName";
+import FilterByRegion from "../Filters/FilterByRegion";
+import FilterByActivity from "../Filters/FilterByActivity";
+import OrderByPopulation from "../Filters/OrderByPopulation";
+import ActivityForm from "../ActivityForm/ActivityForm";
+
+const StyledLink = styled(Link)`
+    color: black;
+    margin: 1%;
+    text-decoration: none;
+    &:focus, &:visited, &:link, &:active {
+        text-decoration: none;
+    };
+`;
 
 const PageSection = styled.section`
-    background-color: grey;
+    background-color: #D6A886;
     display: flex;
     flex-direction: column;
+    height: 100vh;
 `
 const TopSection = styled.section`
-    background-color: blue;
     height: 10vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 1%
+`
+const TopSectionLeft = styled.div`
+`
+const TopSectionRight = styled.div`
+    width: 100vh;
 `
 const MiddleSection = styled.section`
-    background-color: coral;
-    height: 90vh;
+    height: 80vh;
     display: flex;
     justify-content: space-around;
     text-align: center;
 `
 const MiddleSectionLeft = styled.div`
-    background-color: white;
     width: 90vh;
     display: flex;
     flex-direction: column;
@@ -30,33 +53,45 @@ const MiddleSectionLeft = styled.div`
     align-items: center;
 `
 const MiddleSectionRight = styled.div`
-    background-color: green;
     width: 90vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
 `
 const CreateActivityDiv = styled.div`
-    background-color: grey;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
     align-items: center;
+    background-color: #EDFFD9;
+    justify-content: center;
+    border-radius: 0 20px 20px 0;
+    height: 100%;
+    width: 100%;
+    margin-bottom: 2%;
 `
 const CountriesDiv = styled.div`
 
 `
 const FiltersDiv = styled.div`
-    background-color: white;
     height: 40vh;
+    background-color: #EDFFD9;
+    border-radius: 20px 0 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 `
 const StyledButton = styled.button`
+    font-size: 2rem;
 `
 const StyledUList = styled.ul`
-    height: 50vh;
+    height: 40vh;
     overflow: hidden;
     overflow-y: scroll;
-    list-style: none
+    list-style: none;
+    background-color: #EDFFD9;
+    border-radius: 0 20px;
 `
 const StyledLItem = styled.li`
     margin: 5px;
@@ -64,16 +99,17 @@ const StyledLItem = styled.li`
 const ButtonChoose = styled.button`
     margin-left: 5px;
 `
-const StyledForm = styled.form`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+const PageTitle = styled.span`
+    font-size: 3rem;
 `
 
-
 function CreateActivity() {
-    const countries = useSelector(state => state.countriesBackup);
-    const dispatch = useDispatch();
+    const countries = useSelector(state => state.countries);
+    const [search, setSearch] = useState();
+    const [sortByName, setSortByName] = useState("ASC");
+    const [sortByPopulation, setSortByPopulation] = useState("ASC")
+    const [region, setRegion] = useState("all");
+    const [activity, setActivity] = useState("all")
     const [newActivity, setNewActivity] = useState({
         name: "",
         difficulty: "",
@@ -81,20 +117,6 @@ function CreateActivity() {
         season: "",
         countries: [],
     });
-
-    function onInputChange(event) {
-        setNewActivity(prevState => {
-            return {
-                ...prevState,
-                [event.target.name] : event.target.value
-            }
-        })
-    }
-
-    function submitNewActivity(event) {
-        event.preventDefault();
-        dispatch(createNewActivity(newActivity))
-    }
 
     function handleChooseButton(id) {
         setNewActivity({
@@ -106,48 +128,33 @@ function CreateActivity() {
     return (
     <PageSection>
         <TopSection>
-            <StyledButton>Home</StyledButton>
+            <TopSectionLeft>
+                <StyledLink to="/countries">
+                    <StyledButton>Home</StyledButton>
+                </StyledLink>
+            </TopSectionLeft>
+            <TopSectionRight>
+                <PageTitle>Create new activity</PageTitle>
+            </TopSectionRight>
         </TopSection>
         <MiddleSection>
             <MiddleSectionLeft>
                 <CreateActivityDiv>
-                    <StyledForm onSubmit={submitNewActivity}>
-                        <label>Name:</label>
-                            <input 
-                                type="text" 
-                                name="name" 
-                                value={newActivity.name} 
-                                onChange={onInputChange}/>
-                        <label>Difficulty:</label>
-                        <input 
-                            type="text" 
-                            name="difficulty" 
-                            value={newActivity.difficulty} 
-                            onChange={onInputChange}/>
-                        <label>Duration:</label>
-                        <input 
-                            type="text" 
-                            name="duration" 
-                            value={newActivity.duration} 
-                            onChange={onInputChange}/>
-                        <label>Season:</label>
-                        <input 
-                            type="text" 
-                            name="season" 
-                            value={newActivity.season} 
-                            onChange={onInputChange}/>
-                        <button type="submit">Create</button>
-                    </StyledForm>
+                    <ActivityForm state={newActivity} setState={setNewActivity}/>
                 </CreateActivityDiv>
             </MiddleSectionLeft>
             <MiddleSectionRight>
                 <FiltersDiv>
-                    FILTERS
+                    <SearchByName state={search} setState={setSearch}/>
+                    <OrderByName state={sortByName} setStateName={setSortByName}/>
+                    <OrderByPopulation state={sortByPopulation} setStatePopulation={setSortByPopulation}/>
+                    <FilterByRegion state={region} setState={setRegion}/>
+                    <FilterByActivity state={activity} setState={setActivity}/>
                 </FiltersDiv>
                 <CountriesDiv>
                     <StyledUList>
                         {countries?.length ? 
-                        countries?.map(country => <StyledLItem>{country.name} <ButtonChoose onClick={() => handleChooseButton(country.id)}>Choose</ButtonChoose></StyledLItem>) : 
+                        countries?.map(country => <StyledLItem key={country.id}>{country.name} <ButtonChoose onClick={() => handleChooseButton(country.id)}>Choose</ButtonChoose></StyledLItem>) : 
                         <li>Country not found</li>}
                     </StyledUList>
                 </CountriesDiv>
