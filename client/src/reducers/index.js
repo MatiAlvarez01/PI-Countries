@@ -21,6 +21,7 @@ function reducer(state = initialState, action) {
     switch (action.type) {
         case GET_COUNTRIES:
             return {
+                ...state,
                 countries: action.payload,
                 countriesBackup: action.payload
             }
@@ -96,7 +97,7 @@ function reducer(state = initialState, action) {
             }
         case FILTER_REGION:
             const countries = state.countriesBackup;
-            let countriesByRegion = []
+            let countriesByRegion = [];
             if (action.payload === "all") {
                 countriesByRegion = countries;
             } else {
@@ -105,6 +106,18 @@ function reducer(state = initialState, action) {
             return {
                 ...state,
                 countries: countriesByRegion
+            }
+        case FILTER_ACTIVITY:
+            const countries2 = state.countriesBackup;
+            let countriesByActivity = [];
+            if (action.payload === "all") {
+                countriesByActivity = countries2;
+            } else {
+                countriesByActivity = state.activitiesList.filter(activity => activity.name === action.payload)[0].countries.map(countryWithActivity => countryWithActivity)
+            }
+            return {
+                ...state,
+                countries: countriesByActivity
             }
         case CREATE_ACTIVITY:
             return {
@@ -115,18 +128,6 @@ function reducer(state = initialState, action) {
             return {
                 ...state,
                 activitiesList: action.payload
-            }
-        case FILTER_ACTIVITY:
-            const countries2 = state.countriesBackup
-            let countriesByActivity = [];
-            if (action.payload === "all") {
-                countriesByActivity = countries2;
-            } else {
-                countriesByActivity = countries2.filter(country => country.activities.filter(activity => activity.name === action.payload))
-            }
-            return {
-                ...state,
-                countries: countriesByActivity
             }
         default: return {
             ...state

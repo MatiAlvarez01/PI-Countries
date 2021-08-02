@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { filterByActivity } from "../../actions";
 
 const Form = styled.form`
-    width: 80%;
     padding: 2%;
     text-align: center;
+    width: 80%;
 `
 
 const Label = styled.label`
@@ -34,8 +34,6 @@ function FilterByActivity(props) {
     function handleSelectChange(event) {
         props.setState(event.target.value)
     }
-
-    console.log("activities: ", activities) //El problema del undefined
 
     return (
         <Form onSubmit={handleFormSubmit}>

@@ -13,8 +13,8 @@ import NextPage from "../Pagination/NextPage";
 
 const StyledLink = styled(Link)`
     color: black;
-    margin: 1%;
     text-decoration: none;
+    margin: 1%;
     &:focus, &:visited, &:link, &:active {
         text-decoration: none;
     };
@@ -22,42 +22,42 @@ const StyledLink = styled(Link)`
 const PageSection = styled.section`
 `
 const TopSection = styled.section`
+    align-items: center;
+    background-color: #D2EFFA;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-around;
-    align-items: center;
-    background-color: #D2EFFA;
 `
 const ResultSection = styled.section`
+    background-color: #D2EFFA;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-between;
-    background-color: #D2EFFA;
 `
 const FiltersSection = styled.section`
-    width: 50vh;
+    align-items: center;
     background-color: #D2EFFA;
     display: flex;
+    width: 50vh;
     flex-direction: column;
-    align-items: center;
 `
 const CountriesSection = styled.section`
     display: flex;
-    flex-direction: column;
     width: 150vh;
+    flex-direction: column;
 `
 const NewActivityDiv = styled.div`
-    width: 40vh;
+    align-items: center;
     display: flex;
     justify-content: center;
-    align-items: center;
     padding: 1%;
+    width: 40vh;
 `
 const ButtonNewActiviy = styled.button`
-    -webkit-box-shadow: 1px 1px 39px 0px rgba(0,0,0,0.43);
     -moz-box-shadow: 1px 1px 39px 0px rgba(0,0,0,0.30);
+    -webkit-box-shadow: 1px 1px 39px 0px rgba(0,0,0,0.43);
     background-color: #04ADBF;
     border: 1px solid #04ADBF;
     border-radius: 30px;
@@ -84,11 +84,11 @@ function Countries() {
     const countries = useSelector(state => state.countries);
     const [search, setSearch] = useState();
     const [sortByName, setSortByName] = useState("ASC");
-    const [sortByPopulation, setSortByPopulation] = useState("ASC")
+    const [sortByPopulation, setSortByPopulation] = useState("ASC");
     const [region, setRegion] = useState("all");
-    const [activity, setActivity] = useState("all")
-    const [indexStart, setIndexStart] = useState(0)
-    const [indexEnd, setIndexEnd] = useState(9)
+    const [activity, setActivity] = useState("all");
+    const [indexStart, setIndexStart] = useState(0);
+    const [indexEnd, setIndexEnd] = useState(9);
 
     return (
         <PageSection>
@@ -102,17 +102,17 @@ function Countries() {
             </TopSection>
             <ResultSection>
                 <FiltersSection>
-                    <p>POR ORDEN ALFABETICO Y CANTIDAD POBLACION</p>
+                    <p>-----</p>
                     <OrderByName state={sortByName} setStateName={setSortByName}/>
                     <OrderByPopulation state={sortByPopulation} setStatePopulation={setSortByPopulation}/>
-                    <p>POR CONTINENTE Y ACTIVIDAD TURISTICA</p>
+                    <p>-----</p>
                     <FilterByRegion state={region} setState={setRegion}/>
                     <FilterByActivity state={activity} setState={setActivity}/>
                 </FiltersSection>
                 <CountriesSection>
                     <PaginationButtonsDiv>
                         <PrevPage stateStart={indexStart} stateEnd={indexEnd} setStateStart={setIndexStart} setStateEnd={setIndexEnd}/>
-                        <NextPage setStateStart={setIndexStart} setStateEnd={setIndexEnd}/>
+                        <NextPage stateStart={indexStart} stateEnd={indexEnd} setStateStart={setIndexStart} setStateEnd={setIndexEnd}/>
                     </PaginationButtonsDiv>
                         <CountriesDiv>
                         {Array.isArray(countries) ? 

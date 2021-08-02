@@ -3,8 +3,8 @@ import styled from "styled-components"
 import { Link } from "react-router-dom";
 
 const LandingSection = styled.section`
-    background-position-y: center;
     background-image: url('/landingImg2.jpg');
+    background-position-y: center;
     background-size: cover;
     display: flex;
     flex-direction: row;

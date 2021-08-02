@@ -4,9 +4,9 @@ import { useDispatch } from "react-redux";
 import { filterByRegion } from "../../actions";
 
 const Form = styled.form`
-    width: 80%;
     padding: 2%;
     text-align: center;
+    width: 80%;
 `
 
 const Label = styled.label`

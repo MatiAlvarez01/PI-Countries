@@ -9,40 +9,40 @@ const CountryDetailsSection = styled.section`
     height: 100vh;
 `
 const NameSection = styled.section`
-    background-color: white;
-    text-align: center;
-    display: flex;
     align-items: center;
+    background-color: white;
+    display: flex;
     justify-content: space-around;
+    text-align: center;
 `
 const MiddleSection = styled.section`
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    padding: 1%;
     justify-content: space-around;
+    padding: 1%;
 `
 const ActivitiesSection = styled.section`
+    align-items: center;
     display: flex;
     flex-direction: column;
-    align-items: center;
 `
 const ActivitiesSectionTitle = styled.div`
 
 `
 const FlagDiv = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
     align-content: center;
+    align-items: center;
+    display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: center;
 `
 const InfoDiv = styled.div`
+    align-items: center;
     display: flex;
     flex-direction: row;
     padding: 2%;
-    align-items: center;
     text-align: center;
 `
 const InfoDivLeft = styled.div`
@@ -75,12 +75,12 @@ const ActivitiesTitle = styled.p`
     font-size: 1.5rem;
 `
 const ActivityCard = styled.div`
-    height: 160px;
-    width: 150px;
     background-color: white;
+    height: 160px;
     margin: 2%;
     padding: 1%;
     text-align: center;
+    width: 150px;
 `
 const Activities = styled.div`
     display: flex;
@@ -124,7 +124,7 @@ function CountryDetails() {
                 </ActivitiesSectionTitle>
                 <Activities>
                     {countryDetails?.activities?.length ? 
-                    countryDetails?.activities.map(activity => <ActivityCard>
+                    countryDetails?.activities.map(activity => <ActivityCard key={activity.key}>
                         <p>{activity.name}</p>
                         <p>Difficulty: {activity.difficulty}</p>
                         <p>Duration: {activity.duration}</p>

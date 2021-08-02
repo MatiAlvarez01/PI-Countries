@@ -7,8 +7,10 @@ const Button = styled.button`
 
 function NextPage(props) {
     function handleButtonClick(){
-        props.setStateStart(prevState => prevState + 9)
-        props.setStateEnd(prevState => prevState + 9)
+        if(props.stateStart < 243) {
+            props.setStateStart(prevState => prevState + 9)
+            props.setStateEnd(prevState => prevState + 9)
+        }
     }
     return (
         <Button onClick={handleButtonClick}>Next Page</Button>

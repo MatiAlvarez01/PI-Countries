@@ -4,16 +4,16 @@ import styled from "styled-components"
 import { searchCountriesByName } from "../../actions";
 
 const SearchDiv = styled.div`
-    width: 70%;
+    align-items: center;
     display: flex;
     justify-content: center;
-    align-items: center;
     padding: 1%;
+    width: 70%;
 `
 const SearchInput = styled.input`
-    font-size: 2rem;
     border: 0;
     border-radius: 30px;
+    font-size: 2rem;
     padding: 10px 30px;
     overflow: auto;
     outline: none;

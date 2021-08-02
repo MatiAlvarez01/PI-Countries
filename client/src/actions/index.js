@@ -102,6 +102,7 @@ export function filterByRegion(region) {
 }
 
 export function filterByActivity(activity) {
+    console.log("ACTION ACTIVITY: ", activity)
     return function(dispatch) {
         return dispatch({
             type: FILTER_ACTIVITY,

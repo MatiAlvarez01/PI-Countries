@@ -4,21 +4,21 @@ import { useDispatch } from "react-redux";
 import { createNewActivity } from "../../actions";
 
 const StyledForm = styled.form`
+    align-items: center;
     display: flex;
     flex-direction: column;
-    align-items: center;
 `
 const Label = styled.label`
-    margin: 3%;
     font-size: 2.5rem;
+    margin: 3%;
 `
 const Input = styled.input`
-    margin: 1% ;
     font-size: 2rem;
+    margin: 1% ;
 `
 const Button = styled.button`
-    margin: 3%;
     font-size: 1.5rem;
+    margin: 3%;
 `
 const OptionsSpan = styled.span`
     font-size: 20px

@@ -3,16 +3,16 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const CountryCard = styled.div`
+    align-items: center;
     background-color: whitesmoke;
-    height: 400px;
-    width: 300px;
+    border-radius: 15px;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    align-items: center;
+    height: 400px;
     justify-content: space-around;
     text-align: center;
-    border-radius: 15px;
+    width: 300px;
 `
 const CountryFlag = styled.img`
     height: 160px;
@@ -27,8 +27,8 @@ const CountryRegion = styled.span`
 `
 const StyledLink = styled(Link)`
     color: black;
-    margin: 1%;
     text-decoration: none;
+    margin: 1%;
     &:focus, &:visited, &:link, &:active {
         text-decoration: none;
     };

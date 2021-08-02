@@ -21,15 +21,15 @@ const StyledLink = styled(Link)`
 const PageSection = styled.section`
     background-color: #D6A886;
     display: flex;
-    flex-direction: column;
     height: 100vh;
+    flex-direction: column;
 `
 const TopSection = styled.section`
-    height: 10vh;
+    align-items: center;
     display: flex;
     flex-direction: row;
+    height: 10vh;
     justify-content: space-around;
-    align-items: center;
     margin-bottom: 1%
 `
 const TopSectionLeft = styled.div`
@@ -38,60 +38,60 @@ const TopSectionRight = styled.div`
     width: 100vh;
 `
 const MiddleSection = styled.section`
-    height: 80vh;
     display: flex;
+    height: 80vh;
     justify-content: space-around;
     text-align: center;
 `
 const MiddleSectionLeft = styled.div`
-    width: 90vh;
+    align-content: center;
+    align-items: center;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-content: center;
     flex-wrap: nowrap;
-    align-items: center;
+    justify-content: center;
+    width: 90vh;
 `
 const MiddleSectionRight = styled.div`
-    width: 90vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    width: 90vh;
 `
 const CreateActivityDiv = styled.div`
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
     align-items: center;
     background-color: #EDFFD9;
-    justify-content: center;
+    display: flex;
     border-radius: 0 20px 20px 0;
+    flex-direction: column;
+    flex-wrap: nowrap;
     height: 100%;
-    width: 100%;
+    justify-content: center;
     margin-bottom: 2%;
+    width: 100%;
 `
 const CountriesDiv = styled.div`
 
 `
 const FiltersDiv = styled.div`
-    height: 40vh;
+    align-items: center;
     background-color: #EDFFD9;
     border-radius: 20px 0 0 0;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    height: 40vh;
     justify-content: center;
 `
 const StyledButton = styled.button`
     font-size: 2rem;
 `
 const StyledUList = styled.ul`
-    height: 40vh;
-    overflow: hidden;
-    overflow-y: scroll;
-    list-style: none;
     background-color: #EDFFD9;
     border-radius: 0 20px;
+    height: 40vh;
+    list-style: none;
+    overflow: hidden;
+    overflow-y: scroll;
 `
 const StyledLItem = styled.li`
     margin: 5px;
