@@ -6,14 +6,24 @@ const { Country, conn } = require('../../src/db.js');
 
 const agent = session(app);
 const country = {
-  id: "ARG",
-  name:"Argentina",
-  imgFlag: "https://restcountries.eu/data/arg.svg",
-  region: "Americas",
-  capital: "Buenos Aires",
-  subRegion: "South America",
+  activities: [],
   area: 2780400,
-  population: 43590400
+  capital: "Buenos Aires",
+  id: "ARG",
+  imgFlag: "https://restcountries.eu/data/arg.svg",
+  name:"Argentina",
+  population: 43590400,
+  region: "Americas",
+  subRegion: "South America",
+};
+
+const countryRes = {
+  "id": "ARG",
+  "name": "Argentina",
+  "imgFlag": "https://restcountries.eu/data/arg.svg",
+  "region": "Americas",
+  "population": 43590400,
+  "activities": []
 };
 
 describe('Country routes', () => {
@@ -27,5 +37,21 @@ describe('Country routes', () => {
     it('should get 200', () =>
       agent.get('/countries').expect(200)
     );
+    it('Should res with the country in the database', () => 
+      agent.get('/countries').expect((res) => {
+        expect(res.body).to.deep.equal([countryRes]);
+      })
+    );
+    it("Should res with the country who match the name pass by query", () =>
+      agent.get("/countries?name=argentina").expect((res) => {
+        expect(res.body).to.deep.equal([countryRes])
+      })
+    );
+    it("Should res with the country who match the ID pass by params", () => 
+      agent.get("/countries/ARG").expect((res) => {
+        expect(res.body).to.deep.equal(country)
+      })
+    );
   });
+
 });
