@@ -76,9 +76,9 @@ const ActivitiesTitle = styled.p`
 `
 const ActivityCard = styled.div`
     background-color: white;
-    height: 160px;
+    border-radius: 20px;
     margin: 2%;
-    padding: 1%;
+    padding: 2%;
     text-align: center;
     width: 150px;
 `
@@ -127,7 +127,7 @@ function CountryDetails() {
                     countryDetails?.activities.map(activity => <ActivityCard key={activity.key}>
                         <p>{activity.name}</p>
                         <p>Difficulty: {activity.difficulty}</p>
-                        <p>Duration: {activity.duration}</p>
+                        <p>Duration: {activity.duration} mins</p>
                         <p>Season: {activity.season}</p>
                     </ActivityCard>) :
                 <p>This Country dosn't have any activities</p>}

@@ -14,7 +14,8 @@ const Label = styled.label`
 `
 const Input = styled.input`
     font-size: 2rem;
-    margin: 1% ;
+    margin: 1%;
+    text-align: center;
 `
 const Button = styled.button`
     font-size: 1.5rem;
@@ -48,25 +49,33 @@ function ActivityForm(props) {
                 type="text" 
                 name="name" 
                 value={props.state.name} 
-                onChange={onInputChange}/>
+                onChange={onInputChange}
+                autoComplete="off"
+                />
         <Label>Difficulty:<br/><OptionsSpan>(1, 2, 3, 4, 5)</OptionsSpan></Label>
         <Input 
             type="text" 
             name="difficulty" 
             value={props.state.difficulty} 
-            onChange={onInputChange}/>
-        <Label>Duration:</Label>
+            onChange={onInputChange}
+            autoComplete="off"
+            />
+        <Label>Duration:<br/><OptionsSpan>(on minutes)</OptionsSpan></Label>
         <Input 
             type="text" 
             name="duration" 
             value={props.state.duration} 
-            onChange={onInputChange}/>
+            onChange={onInputChange}
+            autoComplete="off"
+            />
         <Label>Season: <br/><OptionsSpan>(Summer, Autumn, Winter, Spring)</OptionsSpan></Label>
         <Input 
             type="text" 
             name="season" 
             value={props.state.season} 
-            onChange={onInputChange}/>
+            onChange={onInputChange}
+            autoComplete="off"
+            />
         <Button type="submit">Create</Button>
     </StyledForm>
     )

@@ -39,6 +39,7 @@ function SearchByName(props) {
             name="name"
             placeholder="Search by name..."
             onChange={handleInputChange}
+            autoComplete="off"
             />
         </form>
     </SearchDiv>
