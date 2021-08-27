@@ -41,6 +41,7 @@ const MiddleSection = styled.section`
     display: flex;
     height: 80vh;
     justify-content: space-around;
+    flex-wrap: wrap;
     text-align: center;
 `
 const MiddleSectionLeft = styled.div`

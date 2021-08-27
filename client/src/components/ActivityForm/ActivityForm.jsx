@@ -39,7 +39,13 @@ function ActivityForm(props) {
 
     function submitNewActivity(event) {
         event.preventDefault();
-        dispatch(createNewActivity(props.state))
+        if (props.state.difficulty > 5) {
+            alert("La dificultad no puede ser mayor que 5")
+        } else if (props.state.difficulty < 1) {
+            alert("La dificultad no puede ser menor que 1")
+        }  else {
+            dispatch(createNewActivity(props.state))
+        }
     }
 
     return (
