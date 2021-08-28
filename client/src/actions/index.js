@@ -26,14 +26,26 @@ export function getCountries() {
 }
 
 export function searchCountriesByName(name) {
-    return function(dispatch) {
-        return axios.get(`${COUNTRIES_URL}?name=${name}`)
-            .then(countries => {
-                dispatch({
-                    type: SEARCH_COUNTRIES,
-                    payload: countries.data
+    if(name) {
+        return function(dispatch) {
+            return axios.get(`${COUNTRIES_URL}?name=${name}`)
+                .then(countries => {
+                    dispatch({
+                        type: SEARCH_COUNTRIES,
+                        payload: countries.data
+                    })
                 })
-            })
+        }
+    } else {
+        return function(dispatch) { 
+            return axios.get(COUNTRIES_URL)
+                .then(countries => {
+                    dispatch({
+                        type: SEARCH_COUNTRIES,
+                        payload: countries.data
+                    })
+                })
+        }
     }
 }
 
