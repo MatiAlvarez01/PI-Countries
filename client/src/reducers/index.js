@@ -26,9 +26,15 @@ function reducer(state = initialState, action) {
                 countriesBackup: action.payload
             }
         case SEARCH_COUNTRIES:
+            var countriesFound;
+            if (action.pay !== undefined) {
+                countriesFound = action.payload
+            } else {
+                countriesFound = state.countriesBackup
+            }
             return {
                 ...state,
-                countries: action.payload
+                countries: countriesFound
             }
         case GET_COUNTRY_DETAILS:
             return {
