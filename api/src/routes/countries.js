@@ -14,7 +14,7 @@ async function fillDatabase(req, res, next) {
     try {
         const allCountries = await Country.findAll();
         if(!allCountries.length) { //Si la database esta vacia, la completa, luego continua
-            let countriesToDatabase = await axios.get("https://restcountries.eu/rest/v2/all");
+            let countriesToDatabase = await axios.get("https://restcountries.com/v3.1/all");
             countriesToDatabase = countriesToDatabase.data.map(country => {
                 return Country.create({
                     id: country.alpha3Code,
